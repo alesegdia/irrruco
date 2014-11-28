@@ -22,6 +22,7 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Irrlicht REQUIRED)
 #find_package(OpenGL REQUIRED)
 find_package(Bullet REQUIRED)
+find_package(Aruco REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system)
 
 add_executable(irrbull ${SOURCES})
