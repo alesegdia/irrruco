@@ -1,6 +1,8 @@
+cmake_minimum_required(VERSION 2.6)
 
-cmake_minimum_required(VERSION 2.8)
-project(aruco_lab)
-#SET(CMAKE_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/lib/cmake/ )
-find_package(aruco REQUIRED )
+project(irruco)
+
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+
 add_subdirectory(src)
+
