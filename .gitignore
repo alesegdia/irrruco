@@ -3,3 +3,7 @@ xx*.jpg
 00
 build
 bin
+calib/jpgs
+calib/cam.yml
+calib/imgs.xml
+calib/calib
