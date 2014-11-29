@@ -10,8 +10,8 @@ if(Aruco_INCLUDE_DIR)
   set(Aruco_FIND_QUIETLY TRUE)
 endif(Aruco_INCLUDE_DIR)
 
-find_path(Aruco_INCLUDE_DIR aruco.h
-  PATH_SUFFIXES include aruco
+find_path(Aruco_INCLUDE_DIR aruco
+  PATH_SUFFIXES include
   PATHS
   ~/Library/Frameworks
   /Library/Frameworks
@@ -39,14 +39,14 @@ find_library(Aruco_LIBRARY aruco
   $ENV{ArucoDIR})
 
 
+if(Aruco_LIBRARY)
+  set(Aruco_FOUND TRUE)
+else()
+  set(Aruco_FOUND FALSE)
+endif()
+
 # Handle the QUIETLY and REQUIRED arguments and set SNDFILE_FOUND to TRUE if
 # all listed variables are TRUE.
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Aruco DEFAULT_MSG Aruco_LIBRARY Aruco_INCLUDE_DIR)
-
-if(Aruco_FOUND)
-  set(Aruco_LIBRARIES ${Aruco_LIBRARY})
-else(Aruco_FOUND)
-  set(Aruco_LIBRARIES)
-endif(Aruco_FOUND)
+find_package_handle_standard_args(Aruco Aruco_FOUND Aruco_LIBRARY Aruco_INCLUDE_DIR)
 
