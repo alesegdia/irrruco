@@ -23,9 +23,11 @@ find_package(Irrlicht REQUIRED)
 #find_package(OpenGL REQUIRED)
 find_package(Bullet REQUIRED)
 find_package(Aruco REQUIRED)
+find_package(OpenCV REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system)
 
 add_executable(irrbull ${SOURCES})
+add_executable(aruco_simple aruco_simple.cpp)
 
 if(BOOST_FOUND)
 	include_directories(${Boost_INCLUDE_DIRS})
@@ -42,6 +44,15 @@ if(BULLET_FOUND)
 	target_link_libraries(irrbull ${BULLET_LIBRARIES})
 endif()
 
+if(Aruco_FOUND)
+	include_directories(aruco_simpe ${Aruco_INCLUDE_DIR})
+	target_link_libraries(aruco_simple ${Aruco_LIBRARY})
+endif()
+
+if(OpenCV_FOUND)
+	include_directories(aruco_simpe ${OpenCV_INCLUDE_DIR})
+	target_link_libraries(aruco_simple ${OpenCV_LIBRARIES})
+endif()
 
 # Set output
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin)
