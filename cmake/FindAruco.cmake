@@ -10,8 +10,8 @@ if(Aruco_INCLUDE_DIR)
   set(Aruco_FIND_QUIETLY TRUE)
 endif(Aruco_INCLUDE_DIR)
 
-find_path(Aruco_INCLUDE_DIR Box2D/Box2D.h
-  PATH_SUFFIXES include
+find_path(Aruco_INCLUDE_DIR aruco.h
+  PATH_SUFFIXES include aruco
   PATHS
   ~/Library/Frameworks
   /Library/Frameworks
@@ -24,23 +24,7 @@ find_path(Aruco_INCLUDE_DIR Box2D/Box2D.h
   ${ArucoDIR}
   $ENV{ArucoDIR})
 
-find_library(Aruco_LIBRARY_DEBUG
-  Box2D-d
-  PATH_SUFFIXES lib64 lib
-  PATHS
-  ~/Library/Frameworks
-  /Library/Frameworks
-  /usr/local
-  /usr
-  /sw          # Fink
-  /opt/local   # DarwinPorts
-  /opt/csw     # Blastwave
-  /opt
-  ${ArucoDIR}
-  $ENV{ArucoDIR})
-
-find_library(Aruco_LIBRARY_RELEASE
-  Box2D
+find_library(Aruco_LIBRARY aruco
   PATH_SUFFIXES lib64 lib
   PATHS
   ~/Library/Frameworks

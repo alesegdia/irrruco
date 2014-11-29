@@ -32,11 +32,6 @@ if(BOOST_FOUND)
 	target_link_libraries(irrbull ${Boost_LIBRARIES})
 endif()
 
-#if(OPENGL_FOUND)
-#	include_directories(${OPENGL_INCLUDE_DIR})
-#	target_link_libraries(irrbull ${OPENGL_LIBRARIES})
-#endif()
-
 if(IRRLICHT_FOUND)
 	include_directories(${IRRLICHT_INCLUDE_DIRS})
 	target_link_libraries(irrbull ${IRRLICHT_LIBRARIES})
