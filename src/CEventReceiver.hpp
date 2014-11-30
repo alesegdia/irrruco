@@ -17,7 +17,10 @@
 #ifndef __CEVENTRECEIVER__
 #define __CEVENTRECEIVER__
 
+#include <irrlicht/irrlicht.h>
 #include "common.h"
+
+using namespace irr;
 
 class CEventReceiver : public IEventReceiver
 {
@@ -26,7 +29,6 @@ public:
 	CEventReceiver();
 	~CEventReceiver();
 
-	void SetEngine(CEngine* engine);
 	virtual bool OnEvent(const SEvent& event);
 	virtual bool IsKeyDown (EKEY_CODE keyCode) const;
 	s32 GetDeltaMouseX();

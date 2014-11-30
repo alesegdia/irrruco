@@ -14,6 +14,7 @@
 //	You should have received a copy of the GNU General Public License
 //	along with IrrBull.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "common.h"
 #include "CEventReceiver.hpp"
 
 CEventReceiver::CEventReceiver()

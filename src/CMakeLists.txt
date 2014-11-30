@@ -1,17 +1,8 @@
 # Name the sources
 set(SOURCES
-	main.cpp
-	CEngine.cpp
-	CPhysics.cpp
-	CGame.cpp
 	CEventReceiver.cpp
-	CGameObjectManager.cpp
-	GOEntity.cpp
-	GOEntityController.cpp
-	GOIAController.cpp
-	GOCamera.cpp
-	IGameObject.cpp
-	CDebugDraw.hpp)
+	main.cpp
+	)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 

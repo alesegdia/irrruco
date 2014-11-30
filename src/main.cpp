@@ -14,12 +14,62 @@
 //	You should have received a copy of the GNU General Public License
 //	along with IrrBull.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "CGame.hpp"
+#include "common.h"
+using namespace irr;
+#include "CEventReceiver.hpp"
+
+
+IrrlichtDevice* device;
+video::IVideoDriver* driver;
+CEventReceiver receiver;
+scene::ISceneManager* smgr;
+
+void InitIrrlicht( int wWidth, int wHeight )
+{
+	device = createDevice(
+			video::EDT_OPENGL, core::dimension2d<u32>(wWidth, wHeight),
+			16, false, false, false, &receiver);
+	if(!device)
+		exit(EXIT_FAILURE);
+
+	driver = device->getVideoDriver();
+	smgr = device->getSceneManager();
+	receiver.SetIrrDevice(device);
+
+}
+
+void CleanIrrlicht()
+{
+	if(device) device->drop();
+	//delete driver;
+	//delete smgr;
+}
+
+void Update()
+{
+	if(device->isWindowActive())
+	{
+		/* RENDERING */
+		driver->beginScene(true, true, video::SColor(64, 67, 74, 255));
+		smgr->drawAll();
+		driver->endScene();
+	}
+	else
+	{
+		device->yield();
+	}
+}
 
 int main ()
 {
-	CGame* g = new CGame();
-	g->Run();
-
+	InitIrrlicht( 800, 600 );
+	bool is_running = true;
+	
+	while(device->run())
+	{
+		Update();
+	}
+	
+	CleanIrrlicht();
 	return 0;
 }
