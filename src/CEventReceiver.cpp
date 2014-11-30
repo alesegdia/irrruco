@@ -47,6 +47,7 @@ bool CEventReceiver::OnEvent(const SEvent& event)
 			//_device->getCursorControl()->setPosition(100,100);
 		}
 	}
+	return false;
 }
 
 bool CEventReceiver::IsKeyDown(EKEY_CODE keyCode) const

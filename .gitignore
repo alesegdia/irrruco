@@ -8,3 +8,4 @@ calib/jpgs
 calib/cam.yml
 calib/imgs.xml
 calib/calib
+*.swp
