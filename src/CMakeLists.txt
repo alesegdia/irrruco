@@ -1,6 +1,7 @@
 # Name the sources
 set(SOURCES
 	CEventReceiver.cpp
+	IQuadSceneNode.cpp
 	main.cpp
 	)
 
@@ -36,13 +37,17 @@ if(BULLET_FOUND)
 endif()
 
 if(Aruco_FOUND)
-	include_directories(aruco_simpe ${Aruco_INCLUDE_DIR})
+	include_directories(aruco_simple ${Aruco_INCLUDE_DIR})
 	target_link_libraries(aruco_simple ${Aruco_LIBRARY})
+	include_directories(irrbull ${Aruco_INCLUDE_DIR})
+	target_link_libraries(irrbull ${Aruco_LIBRARY})
 endif()
 
 if(OpenCV_FOUND)
-	include_directories(aruco_simpe ${OpenCV_INCLUDE_DIR})
+	include_directories(aruco_simple ${OpenCV_INCLUDE_DIR})
 	target_link_libraries(aruco_simple ${OpenCV_LIBRARIES})
+	include_directories(irrbull ${OpenCV_INCLUDE_DIR})
+	target_link_libraries(irrbull ${OpenCV_LIBRARIES})
 endif()
 
 # Set output

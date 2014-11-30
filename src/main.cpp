@@ -15,6 +15,7 @@
 //	along with IrrBull.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "common.h"
+#include <thread>
 using namespace irr;
 #include "CEventReceiver.hpp"
 
@@ -24,6 +25,9 @@ video::IVideoDriver* driver;
 CEventReceiver receiver;
 scene::ISceneManager* smgr;
 scene::ICameraSceneNode* cam;
+cv::VideoCapture videocapture;
+cv::Mat camimg, camimgund;
+bool is_running = true;
 
 void InitIrrlicht( int wWidth, int wHeight )
 {
@@ -36,7 +40,16 @@ void InitIrrlicht( int wWidth, int wHeight )
 	driver = device->getVideoDriver();
 	smgr = device->getSceneManager();
 	receiver.SetIrrDevice(device);
+}
 
+void InitCamera()
+{
+	videocapture.open(1);
+	if( !videocapture.isOpened() )
+	{
+		printf("VIDEO CAPTURE ERROR!!\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void SpawnBall( float x, float y, float z, float radius )
@@ -47,14 +60,11 @@ void SpawnBall( float x, float y, float z, float radius )
 	node->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
 }
 
-void Update()
+void UpdateRenderer()
 {
-	core::vector3df v = cam->getPosition();
-	std::cout << v.X << ", " << v.Y << ", " << v.Z << std::endl;
 	if(device->isWindowActive())
 	{
 		/* RENDERING */
-		printf("isactive\n"); fflush(0);
 		driver->beginScene(true, true, video::SColor(64, 67, 74, 255));
 		smgr->drawAll();
 		driver->endScene();
@@ -62,6 +72,16 @@ void Update()
 	else
 	{
 		device->yield();
+	}
+}
+
+void CameraLoop()
+{
+	while( videocapture.grab() && is_running )
+	{
+		videocapture.retrieve (camimg);
+		cv::imshow("in", camimg);
+		cv::waitKey(1);
 	}
 }
 
@@ -91,21 +111,29 @@ void SetupScene()
 
 	SpawnBall( 0.5, 0, 2, 1 );
 	SpawnBall( -0.5, 0, 2, 1 );
-	//SpawnBall( 0, 0, 2, 1 );
 }
 
 int main ()
 {
 	InitIrrlicht( 800, 600 );
 	SetupScene();
+	InitCamera();
 
-	bool is_running = true;
+	// get test image to know size
+	videocapture >> camimg;
 
-	while(device->run())
-	{
-		Update();
-	}
+	// launch cam grabbing loop thread
+	std::thread camthread( CameraLoop );
 
+	// main rendering loop
+	while( device->run() ) UpdateRenderer();
+
+	// tell cam loop to finish and wait for it
+	is_running = false;
+	camthread.join();
+
+	// release irrlicht
 	if(device) device->drop();
+
 	return 0;
 }
