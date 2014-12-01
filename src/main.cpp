@@ -16,8 +16,10 @@
 
 #include "common.h"
 #include <thread>
-using namespace irr;
 #include "CEventReceiver.hpp"
+#include "IQuadSceneNode.h"
+
+using namespace irr;
 
 
 IrrlichtDevice* device = NULL;
@@ -28,8 +30,10 @@ scene::ICameraSceneNode* cam;
 cv::VideoCapture videocapture;
 cv::Mat camimg, camimgund;
 bool is_running = true;
+video::ITexture* tex;
+int ww, wh;
 
-void InitIrrlicht( int wWidth, int wHeight )
+void InitIrrlicht( int wWidth, int wHeight)
 {
 	device = createDevice(
 			video::EDT_OPENGL, core::dimension2d<u32>(wWidth, wHeight),
@@ -42,15 +46,6 @@ void InitIrrlicht( int wWidth, int wHeight )
 	receiver.SetIrrDevice(device);
 }
 
-void InitCamera()
-{
-	videocapture.open(1);
-	if( !videocapture.isOpened() )
-	{
-		printf("VIDEO CAPTURE ERROR!!\n");
-		exit(EXIT_FAILURE);
-	}
-}
 
 void SpawnBall( float x, float y, float z, float radius )
 {
@@ -66,6 +61,7 @@ void UpdateRenderer()
 	{
 		/* RENDERING */
 		driver->beginScene(true, true, video::SColor(64, 67, 74, 255));
+		driver->draw2DImage( tex, core::position2d<s32>(ww/4,wh/4) );
 		smgr->drawAll();
 		driver->endScene();
 	}
@@ -115,12 +111,25 @@ void SetupScene()
 
 int main ()
 {
-	InitIrrlicht( 800, 600 );
-	SetupScene();
-	InitCamera();
+	// init camera
+	videocapture.open(1);
+	if( !videocapture.isOpened() )
+	{
+		printf("VIDEO CAPTURE ERROR!!\n");
+		exit(EXIT_FAILURE);
+	}
 
 	// get test image to know size
 	videocapture >> camimg;
+
+	// set width and height
+	ww = camimg.cols;
+	wh = camimg.rows;
+
+	InitIrrlicht(ww, wh);
+	SetupScene();
+
+	tex = driver->addTexture(core::dimension2d<u32>(ww/2, wh/2), "asd");
 
 	// launch cam grabbing loop thread
 	std::thread camthread( CameraLoop );
