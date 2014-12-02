@@ -1,18 +1,16 @@
 # Name the sources
 set(SOURCES
 	CEventReceiver.cpp
-	IQuadSceneNode.cpp
 	main.cpp
 	)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ")
 
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED OFF)
 set(Boost_USE_STATIC_RUNTIME OFF)
 
 find_package(Irrlicht REQUIRED)
-#find_package(OpenGL REQUIRED)
 find_package(Bullet REQUIRED)
 find_package(Aruco REQUIRED)
 find_package(OpenCV REQUIRED)
