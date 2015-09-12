@@ -48,5 +48,7 @@ if(OpenCV_FOUND)
 	target_link_libraries(irrbull ${OpenCV_LIBRARIES})
 endif()
 
+target_link_libraries(irrbull -lpthread)
+
 # Set output
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin)
